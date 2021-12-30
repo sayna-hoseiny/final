@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,20 +29,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class MainActivity2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Spinner spinner;
     private Spinner spinner2;
     private EditText searchEt;
     private ImageView searchIv;
+    RecyclerView myRec;
     String word,lang1,lang2;
-
+MyAdapter myAdapter;
+    ArrayList<String> words ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         RequestQueue queue = Volley.newRequestQueue(this);
-
+words= new ArrayList<>();
+myRec=findViewById(R.id.recentword);
 
         String token="67798.2zG1dJzW7tnFHV9WVG8TVd1lx6OUZrsAwlOr5kum";
 
@@ -87,7 +94,11 @@ try{
         result=jo.getString("text");
     }
 
+    words.add(word);
+    myRec.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    myAdapter = new MyAdapter(getApplicationContext(), words);
 
+    myRec.setAdapter(myAdapter);
 Intent intent=new Intent(getApplicationContext(),MainActivity3.class);
     intent.putExtra("result",result);
     intent.putExtra("word",word);
@@ -130,4 +141,11 @@ Intent intent=new Intent(getApplicationContext(),MainActivity3.class);
    return "http://api.vajehyab.com/v3/search?token=" + Token + "&q=" + word + "&type=exact&filter="+lang ;
 
 
-}}
+}
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        myAdapter.notifyDataSetChanged();
+    }
+}
