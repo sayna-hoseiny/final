@@ -149,8 +149,8 @@
                 android:id="@+id/progressBar"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginRight="10dp"
                 android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
                 android:visibility="invisible" />
         </androidx.cardview.widget.CardView>
 
