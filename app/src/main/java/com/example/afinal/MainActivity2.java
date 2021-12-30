@@ -1,14 +1,15 @@
 package com.example.afinal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -99,6 +100,7 @@ try{
     myAdapter = new MyAdapter(getApplicationContext(), words);
 
     myRec.setAdapter(myAdapter);
+    myAdapter.notifyDataSetChanged();
 Intent intent=new Intent(getApplicationContext(),MainActivity3.class);
     intent.putExtra("result",result);
     intent.putExtra("word",word);
@@ -146,6 +148,6 @@ Intent intent=new Intent(getApplicationContext(),MainActivity3.class);
     @Override
     protected void onResume() {
         super.onResume();
-        myAdapter.notifyDataSetChanged();
+
     }
 }
