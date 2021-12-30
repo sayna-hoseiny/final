@@ -21,6 +21,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Spinner spinner;
     private Spinner spinner2;
@@ -51,24 +55,41 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
 
         spinner.setOnItemSelectedListener(this);
      //   spinner2.setOnItemSelectedListener(this);
-       word = searchEt.getText().toString();
-        lang1 = spinner.getSelectedItem().toString();
-        lang2 = spinner2.getSelectedItem().toString();
-        String SelectedLang;
-        if(lang1=="English"){ SelectedLang="en2fa";}
-        else
-            {SelectedLang="dehkhoda";}
+
 
         searchIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                word = searchEt.getText().toString();
+                lang1 = spinner.getSelectedItem().toString();
+                lang2 = spinner2.getSelectedItem().toString();
+                String SelectedLang;
+                if(lang1.equals("English")){ SelectedLang="en2fa";}
+                else
+                {SelectedLang="dehkhoda";}
+
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, GetUrl(token,word,SelectedLang),
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+try{
+    JSONObject body=new JSONObject(response);
+    JSONObject a=new JSONObject(body.getString("data"));
+    JSONArray results=a.getJSONArray("results");
+    String result="";
+    for(int i=0;i<results.length();i++){
+        JSONObject jo=results.getJSONObject(i);
+        result=jo.getString("text");
+    }
+Intent intent=new Intent(getApplicationContext(),MainActivity3.class);
+    intent.putExtra("result",result);
+    intent.putExtra("word",word);
+    startActivity(intent);
 
 
-                                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+}catch (JSONException j){searchEt.setText(j.toString());}
+
+
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -78,7 +99,9 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
                     }
                 });
 
-// Add the request to the RequestQueue.
+
+
+
                 queue.add(stringRequest);
             }
         });
@@ -97,7 +120,7 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
 
     }
     public String GetUrl(String Token,String word,String lang){
-   return "http://api.vajehyab.com/v3/search?token=" + Token + "&q=" + word + "&type=Text&filter="+lang ;
+   return "http://api.vajehyab.com/v3/search?token=" + Token + "&q=" + word + "&type=exact&filter="+lang ;
 
 
 }}

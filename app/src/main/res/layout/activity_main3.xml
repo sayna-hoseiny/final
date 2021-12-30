@@ -40,23 +40,24 @@
             app:cardPreventCornerOverlap="true">
 
             <TextView
+                android:id="@+id/YourEdt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
                 android:text="Your Word"
                 android:textSize="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="30dp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/ResultEdt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="200dp"
                 android:text="Dictionary Translation"
                 android:textSize="20dp"
-                android:layout_marginTop="200dp"
-                android:layout_marginLeft="30dp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
     </LinearLayout>
