@@ -2,7 +2,9 @@ package com.example.afinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -31,11 +33,14 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
     private EditText searchEt;
     private ImageView searchIv;
     String word,lang1,lang2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         RequestQueue queue = Volley.newRequestQueue(this);
+
 
         String token="67798.2zG1dJzW7tnFHV9WVG8TVd1lx6OUZrsAwlOr5kum";
 
@@ -81,6 +86,8 @@ try{
         JSONObject jo=results.getJSONObject(i);
         result=jo.getString("text");
     }
+
+
 Intent intent=new Intent(getApplicationContext(),MainActivity3.class);
     intent.putExtra("result",result);
     intent.putExtra("word",word);
